@@ -8,4 +8,8 @@ export default class Slot {
             loader.resources["../src/assets/symbols/" + this._name + ".png"].texture
         );
     }
+
+    toJSON() {
+        return JSON.stringify({name: this._name});
+    }
 }

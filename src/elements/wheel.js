@@ -1,3 +1,4 @@
+import Slot from './slot';
 export default class Wheel {
     constructor(x, arr) {
         this.x = x;
@@ -17,6 +18,7 @@ export default class Wheel {
 
     drawBaraban(loader, app) {
         let picture = this.randomPicture();
+        sessionStorage.setItem("picture"+this.x, JSON.stringify(picture));
         this.drawBarabanByPict(picture, loader, app);
     }
 
@@ -28,5 +30,13 @@ export default class Wheel {
 
     randomPicture() {
         return Math.floor(Math.random() * (this.baraban.length-1));
+    }
+
+    setDataToSesionStorage() {
+        let slotJSON = [];
+        this.baraban.forEach(slot => {
+            slotJSON.push(slot.toJSON()); 
+        });
+        sessionStorage.setItem("baraban"+this.x, JSON.stringify(slotJSON))
     }
 }
