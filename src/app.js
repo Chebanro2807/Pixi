@@ -45,9 +45,8 @@ class App {
     }
 
     click() {
-        this.cleanDrums();
         this.spinDrum();
-        console.log(this.loader)
+        // this.cleanDrums();
         // this.spinGame();
     }
 
@@ -75,15 +74,28 @@ class App {
     }
 
     cleanDrums() {
+        console.log("tyt")
         this.app.stage.removeChildren(2,7);
     }
 
     spinDrum() {
         let tl = gsap.timeline();
+        console.log(tl)
+        this.wheels.forEach(wheel => {
+            let item = wheel.container;
+            tl.to(item, {duration: 0.2, y: 450, ease: Elastic.easeInOut.config(6, 0)});
+        })
+        console.log(this.app.stage.children)
+        // this.cleanDrums();
         this.wheels.forEach(wheel => {
             let item = wheel.drawBaraban(this.loader, this.app);
-            tl.from(item,1.3, {duration: 0.3, y: -450, ease: Elastic.easeInOut.config(6, 0)});
+            // tl.to(item, {duration: 0.2, y: 450, ease: Elastic.easeInOut.config(6, 0)});
+            tl.from(item, {duration: 0.2, y: -450, ease: Elastic.easeInOut.config(6, 0)}).then(this.cleanDrums.bind(this));
         })
+    }
+
+    alert1() {
+        console.log("tyt1")
     }
 
     shuffleArray(array) {

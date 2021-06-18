@@ -22,11 +22,11 @@ export default class Wheel {
     }
 
     drawBarabanByPict(picture, loader, app) {
-        let container = new PIXI.Container();
-        this.draw(this.baraban[picture].preSprite(loader), 1, container);
-        this.draw(this.baraban[(picture === 0) ? this.baraban.length-1 : picture-1].preSprite(loader), 0, container);
-        this.draw(this.baraban[(picture === this.baraban.length-1) ? 0 : picture+1].preSprite(loader), 2, container); 
-        return app.stage.addChild(container);
+        this.container = new PIXI.Container();
+        this.draw(this.baraban[picture].preSprite(loader), 1, this.container);
+        this.draw(this.baraban[(picture === 0) ? this.baraban.length-1 : picture-1].preSprite(loader), 0, this.container);
+        this.draw(this.baraban[(picture === this.baraban.length-1) ? 0 : picture+1].preSprite(loader), 2, this.container); 
+        return app.stage.addChild(this.container);
     }
 
     randomPicture() {
