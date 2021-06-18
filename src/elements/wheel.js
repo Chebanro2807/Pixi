@@ -1,4 +1,3 @@
-import Slot from './slot';
 export default class Wheel {
     constructor(x, arr) {
         this.x = x;
@@ -8,12 +7,16 @@ export default class Wheel {
         }
     }
 
+    cleanDrums() {
+        
+    }
+
     draw(sprite, position, app) {
         sprite.y = position*150;
         sprite.x = this.x*150;
-        app.stage.addChild(sprite);
         sprite.width=150;
         sprite.height=150;
+        app.stage.addChild(sprite);
     }
 
     drawBaraban(loader, app) {

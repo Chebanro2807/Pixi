@@ -1,8 +1,10 @@
 export default class Start {
-    constructor() {
+    constructor(app) {
+        this.app = app;
         this.container = new PIXI.Container();
-        this.basicText = new PIXI.Text('Basic text in pixi');
-        this.basicText.x = 50;
+        this.container.width 
+        this.basicText = new PIXI.Text('Start');
+        this.basicText.x = 750;
         this.basicText.y = 100;
 
         this.style = new PIXI.TextStyle({
@@ -22,5 +24,11 @@ export default class Start {
             wordWrapWidth: 440,
             lineJoin: 'round',
         });
+        this.button = this.draw(this.app);
+    }
+
+    draw(app) {
+        this.container.addChild(this.basicText);
+        return app.stage.addChild(this.container);
     }
 }

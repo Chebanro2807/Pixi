@@ -6,14 +6,17 @@ import Start from './elements/button';
 class App {
     constructor() {
         this.app = new PIXI.Application({
-            width: 750,
+            antialias: true,
+            autoDensity: true,
+            width: 850,
             height: 450,
             backgroundColor: 0xb7eb34,
+            resolution: devicePixelRatio,
         });
         document.body.appendChild(this.app.view);
 
         this.loader = PIXI.Loader.shared;
-        this.StartButton = new Start();
+        this.StartButton = new Start(this.app);
         let slots = [new Slot('A'),new Slot('B'),new Slot('C'),new Slot('D'),new Slot('E'),new Slot('F'),new Slot('G'),new Slot('H')];
         this.wheels = [];
         for(let i = 0; i < 5; i++) {
@@ -33,6 +36,15 @@ class App {
             this.loader.add("../src/assets/symbols/" + element._name + ".png");
         });
         this.loader.load(this.setup.bind(this));
+        this.app.stage.interactive = true;
+        this.StartButton.button.interactive = true;
+        this.StartButton.button.buttonMode = true;
+        this.StartButton.button.on("pointerdown", this.click.bind(this));
+    }
+
+    click() {
+        this.cleanDrums()
+        this.spinDrum()
     }
 
     setBarabanToSesionStorage() {
@@ -49,6 +61,10 @@ class App {
         } else {
             this.spinDrum();
         }
+    }
+
+    cleanDrums() {
+        this.app.stage.removeChildren(1,16);
     }
 
     spinDrum() {
