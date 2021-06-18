@@ -1,11 +1,10 @@
-export default class Start {
+export default class Score {
     constructor(app) {
         this.app = app;
         this.container = new PIXI.Container();
-
-        this.basicText = new PIXI.Text('Start');
+        this.basicText = new PIXI.Text('000');
         this.basicText.x = 750;
-        this.basicText.y = 200;
+        this.basicText.y = 100;
 
         this.style = new PIXI.TextStyle({
             fontFamily: 'Arial',

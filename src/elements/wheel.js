@@ -7,28 +7,26 @@ export default class Wheel {
         }
     }
 
-    cleanDrums() {
-        
-    }
-
-    draw(sprite, position, app) {
+    draw(sprite, position, container) {
         sprite.y = position*150;
         sprite.x = this.x*150;
         sprite.width=150;
         sprite.height=150;
-        app.stage.addChild(sprite);
+        container.addChild(sprite);
     }
 
     drawBaraban(loader, app) {
         let picture = this.randomPicture();
         sessionStorage.setItem("picture"+this.x, JSON.stringify(picture));
-        this.drawBarabanByPict(picture, loader, app);
+        return this.drawBarabanByPict(picture, loader, app);
     }
 
     drawBarabanByPict(picture, loader, app) {
-        this.draw(this.baraban[picture].preSprite(loader), 1, app);
-        this.draw(this.baraban[(picture === 0) ? this.baraban.length-1 : picture-1].preSprite(loader), 0, app);
-        this.draw(this.baraban[(picture === this.baraban.length-1) ? 0 : picture+1].preSprite(loader), 2, app); 
+        let container = new PIXI.Container();
+        this.draw(this.baraban[picture].preSprite(loader), 1, container);
+        this.draw(this.baraban[(picture === 0) ? this.baraban.length-1 : picture-1].preSprite(loader), 0, container);
+        this.draw(this.baraban[(picture === this.baraban.length-1) ? 0 : picture+1].preSprite(loader), 2, container); 
+        return app.stage.addChild(container);
     }
 
     randomPicture() {

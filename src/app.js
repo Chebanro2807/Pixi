@@ -1,6 +1,7 @@
 import Wheel from './elements/wheel';
 import Slot from './elements/slot';
 import Start from './elements/button';
+import Score from './elements/score';
 
 
 class App {
@@ -17,6 +18,7 @@ class App {
 
         this.loader = PIXI.Loader.shared;
         this.StartButton = new Start(this.app);
+        this.Scoore = new Score(this.app);
         let slots = [new Slot('A'),new Slot('B'),new Slot('C'),new Slot('D'),new Slot('E'),new Slot('F'),new Slot('G'),new Slot('H')];
         this.wheels = [];
         for(let i = 0; i < 5; i++) {
@@ -43,9 +45,18 @@ class App {
     }
 
     click() {
-        this.cleanDrums()
-        this.spinDrum()
+        this.cleanDrums();
+        this.spinDrum();
+        console.log(this.loader)
+        // this.spinGame();
     }
+
+    // spinGame() {
+    //     this.wheels.forEach((wheel)=>{
+    //         gsap.from(wheel, 2, {duration:10, y:300});
+    //     })
+    //     gsap.from(this.StartButton.button, 2, {duration:10, y:100});
+    // }
 
     setBarabanToSesionStorage() {
         this.wheels.forEach((wheel) => {
@@ -64,12 +75,14 @@ class App {
     }
 
     cleanDrums() {
-        this.app.stage.removeChildren(1,16);
+        this.app.stage.removeChildren(2,7);
     }
 
     spinDrum() {
+        let tl = gsap.timeline();
         this.wheels.forEach(wheel => {
-            wheel.drawBaraban(this.loader, this.app);
+            let item = wheel.drawBaraban(this.loader, this.app);
+            tl.from(item,1.3, {duration: 0.3, y: -450, ease: Elastic.easeInOut.config(6, 0)});
         })
     }
 
