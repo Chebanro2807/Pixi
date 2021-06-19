@@ -2,6 +2,7 @@ import Wheel from './elements/wheel';
 import Slot from './elements/slot';
 import Start from './elements/button';
 import Score from './elements/score';
+import Win from './elements/win';
 
 
 class App {
@@ -17,8 +18,8 @@ class App {
         document.body.appendChild(this.app.view);
 
         this.loader = PIXI.Loader.shared;
-        this.StartButton = new Start(this.app);
-        this.Scoore = new Score(this.app);
+        this.startButton = new Start(this.app);
+        this.score = new Score(this.app);
         let slots = [new Slot('A'),new Slot('B'),new Slot('C'),new Slot('D'),new Slot('E'),new Slot('F'),new Slot('G'),new Slot('H')];
         this.wheels = [];
         for(let i = 0; i < 5; i++) {
@@ -39,23 +40,16 @@ class App {
         });
         this.loader.load(this.setup.bind(this));
         this.app.stage.interactive = true;
-        this.StartButton.button.interactive = true;
-        this.StartButton.button.buttonMode = true;
-        this.StartButton.button.on("pointerdown", this.click.bind(this));
+        this.startButton.button.interactive = true;
+        this.startButton.button.buttonMode = true;
+        this.startButton.button.on("pointerdown", this.click.bind(this));
     }
 
     click() {
         this.spinDrum();
-        // this.cleanDrums();
-        // this.spinGame();
+        this.score.changeScoreByTurn();
+        Win.win(this.wheels, this.score);
     }
-
-    // spinGame() {
-    //     this.wheels.forEach((wheel)=>{
-    //         gsap.from(wheel, 2, {duration:10, y:300});
-    //     })
-    //     gsap.from(this.StartButton.button, 2, {duration:10, y:100});
-    // }
 
     setBarabanToSesionStorage() {
         this.wheels.forEach((wheel) => {
@@ -64,38 +58,35 @@ class App {
     }
 
     setup() {
-        if (sessionStorage.getItem("picture0")) {
-            this.wheels.forEach((wheel)=>{
-                wheel.drawBarabanByPict(JSON.parse(sessionStorage.getItem("picture"+wheel.x)), this.loader, this.app)
-            });
-        } else {
-            this.spinDrum();
-        }
+        (sessionStorage.getItem("picture0")) ? this.spinDrumStartByStorage() : this.spinDrumStart();
     }
 
     cleanDrums() {
-        console.log("tyt")
         this.app.stage.removeChildren(2,7);
+    }
+
+    spinDrumStart() {
+        this.wheels.forEach((wheel)=>{
+            wheel.drawBaraban(this.loader, this.app);
+        });
+    }
+
+    spinDrumStartByStorage() {
+        this.wheels.forEach((wheel)=>{
+            wheel.drawBarabanByPict(JSON.parse(sessionStorage.getItem("picture"+wheel.x)), this.loader, this.app)
+        });
     }
 
     spinDrum() {
         let tl = gsap.timeline();
-        console.log(tl)
         this.wheels.forEach(wheel => {
             let item = wheel.container;
             tl.to(item, {duration: 0.2, y: 450, ease: Elastic.easeInOut.config(6, 0)});
         })
-        console.log(this.app.stage.children)
-        // this.cleanDrums();
         this.wheels.forEach(wheel => {
             let item = wheel.drawBaraban(this.loader, this.app);
-            // tl.to(item, {duration: 0.2, y: 450, ease: Elastic.easeInOut.config(6, 0)});
             tl.from(item, {duration: 0.2, y: -450, ease: Elastic.easeInOut.config(6, 0)}).then(this.cleanDrums.bind(this));
         })
-    }
-
-    alert1() {
-        console.log("tyt1")
     }
 
     shuffleArray(array) {

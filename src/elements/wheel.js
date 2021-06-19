@@ -16,17 +16,37 @@ export default class Wheel {
     }
 
     drawBaraban(loader, app) {
-        let picture = this.randomPicture();
-        sessionStorage.setItem("picture"+this.x, JSON.stringify(picture));
-        return this.drawBarabanByPict(picture, loader, app);
+        this.picture = this.randomPicture();
+        sessionStorage.setItem("picture"+this.x, JSON.stringify(this.picture));
+        return this.drawBarabanByPict(this.picture, loader, app);
     }
 
     drawBarabanByPict(picture, loader, app) {
         this.container = new PIXI.Container();
         this.draw(this.baraban[picture].preSprite(loader), 1, this.container);
-        this.draw(this.baraban[(picture === 0) ? this.baraban.length-1 : picture-1].preSprite(loader), 0, this.container);
-        this.draw(this.baraban[(picture === this.baraban.length-1) ? 0 : picture+1].preSprite(loader), 2, this.container); 
+        this.draw(this.baraban[this.topPicture(picture)].preSprite(loader), 0, this.container);
+        this.draw(this.baraban[this.bottomPicture(picture)].preSprite(loader), 2, this.container); 
         return app.stage.addChild(this.container);
+    }
+
+    topPicture(picture) {
+        return (picture === 0) ? this.baraban.length-1 : picture-1;
+    }
+
+    bottomPicture(picture) {
+        return (picture === this.baraban.length-1) ? 0 : picture+1;
+    }
+
+    center() {
+        return this.baraban[this.picture];
+    }
+
+    top() {
+        return this.baraban[this.topPicture(this.picture)];
+    }
+
+    bottom() {
+        return this.baraban[this.bottomPicture(this.picture)];
     }
 
     randomPicture() {

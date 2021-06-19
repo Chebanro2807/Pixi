@@ -2,7 +2,7 @@ export default class Score {
     constructor(app) {
         this.app = app;
         this.container = new PIXI.Container();
-        this.basicText = new PIXI.Text('000');
+        this.basicText = new PIXI.Text('1000');
         this.basicText.x = 750;
         this.basicText.y = 100;
 
@@ -23,11 +23,19 @@ export default class Score {
             wordWrapWidth: 440,
             lineJoin: 'round',
         });
-        this.button = this.draw(this.app);
+        this.draw(this.app);
     }
 
     draw(app) {
         this.container.addChild(this.basicText);
         return app.stage.addChild(this.container);
+    }
+
+    changeScoreByTurn() {
+        this.changeScoreByPrize(-50);
+    }
+
+    changeScoreByPrize(prize) {
+        this.basicText.text = Number(this.basicText.text) + prize;
     }
 }

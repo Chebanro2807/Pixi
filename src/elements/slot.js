@@ -12,4 +12,8 @@ export default class Slot {
     toJSON() {
         return JSON.stringify({name: this._name});
     }
+
+    equals(slot) {
+        return (this._name === slot._name);
+    }
 }
