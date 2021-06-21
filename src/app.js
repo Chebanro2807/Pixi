@@ -4,6 +4,8 @@ import Start from './elements/button';
 import Score from './elements/score';
 import Win from './elements/win';
 import SmallWin from './elements/smallwin';
+import MaskBottom from './elements/mask-bottom';
+import MaskTop from './elements/mask-top';
 
 
 class App {
@@ -51,7 +53,14 @@ class App {
         if (this.cliclLock) {
             return;
         }
+        this.maskBottom = new MaskBottom(this.app);        
         this.spinDrum();
+        this.maskTop = new MaskTop(this.app);
+        this.maskBottom = new MaskBottom(this.app); 
+        this.app.stage.addChild(this.app.stage.children.shift());
+        this.app.stage.addChild(this.app.stage.children.shift());
+        // this.startButton = new Start(this.app);
+        // this.score = new Score(this.app);
         this.score.changeScoreByTurn();
         Win.win(this.wheels, this.score);
         SmallWin.win(this.wheels, this.score);
@@ -68,7 +77,11 @@ class App {
     }
 
     cleanDrums() {
-        this.app.stage.removeChildren(2,7);
+        this.app.stage.removeChildren(0,6); // del drums x5 + bot mask
+        for(let i=0; i<this.wheels.length; i++) {
+            this.app.stage.addChild(this.app.stage.children.shift());
+        }
+        this.app.stage.removeChildren(0,2); //del top mask 
         this.cliclLock = false;
     }
 
