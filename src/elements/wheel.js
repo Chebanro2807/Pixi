@@ -2,7 +2,7 @@ export default class Wheel {
     constructor(x, arr) {
         this.x = x;
         this.baraban = [];
-        for (let i = 0; i < arr.length; i++) { // clone arr
+        for (let i = 0; i < arr.length; i++) {
             this.baraban[i] = arr[i];
         }
     }
@@ -47,6 +47,10 @@ export default class Wheel {
 
     bottom() {
         return this.baraban[this.bottomPicture(this.picture)];
+    }
+
+    pos(func) {
+        return eval("this."+func+"()");
     }
 
     randomPicture() {

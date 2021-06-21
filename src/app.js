@@ -3,6 +3,7 @@ import Slot from './elements/slot';
 import Start from './elements/button';
 import Score from './elements/score';
 import Win from './elements/win';
+import SmallWin from './elements/smallwin';
 
 
 class App {
@@ -17,6 +18,7 @@ class App {
         });
         document.body.appendChild(this.app.view);
 
+        this.cliclLock = false;
         this.loader = PIXI.Loader.shared;
         this.startButton = new Start(this.app);
         this.score = new Score(this.app);
@@ -46,9 +48,13 @@ class App {
     }
 
     click() {
+        if (this.cliclLock) {
+            return;
+        }
         this.spinDrum();
         this.score.changeScoreByTurn();
         Win.win(this.wheels, this.score);
+        SmallWin.win(this.wheels, this.score);
     }
 
     setBarabanToSesionStorage() {
@@ -63,6 +69,7 @@ class App {
 
     cleanDrums() {
         this.app.stage.removeChildren(2,7);
+        this.cliclLock = false;
     }
 
     spinDrumStart() {
@@ -78,6 +85,7 @@ class App {
     }
 
     spinDrum() {
+        this.cliclLock = true;
         let tl = gsap.timeline();
         this.wheels.forEach(wheel => {
             let item = wheel.container;
