@@ -3,8 +3,11 @@ export default class Score {
         this.app = app;
         this.container = new PIXI.Container();
         this.basicText = new PIXI.Text('1000');
-        this.basicText.x = 750;
-        this.basicText.y = 100;
+
+        this.basicText.x = window.innerWidth/2;
+        this.basicText.y = window.innerHeight/2-250;
+        this.basicText.anchor.y = 0.5;
+        this.basicText.anchor.x = 0.5;
 
         this.style = new PIXI.TextStyle({
             fontFamily: 'Arial',

@@ -8,8 +8,10 @@ export default class Wheel {
     }
 
     draw(sprite, position, container) {
-        sprite.y = position*150;
-        sprite.x = this.x*150;
+        sprite.anchor.y = 0.5;
+        sprite.anchor.x = 0.5;
+        sprite.y = (window.innerHeight/2)-150+position*150;
+        sprite.x = (window.innerWidth/2)-300+this.x*150;
         sprite.width=150;
         sprite.height=150;
         container.addChild(sprite);

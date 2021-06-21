@@ -11,10 +11,10 @@ class App {
         this.app = new PIXI.Application({
             antialias: true,
             autoDensity: true,
-            width: 850,
-            height: 450,
+            width: window.innerWidth,
+            height: window.innerHeight,
             backgroundColor: 0xb7eb34,
-            resolution: devicePixelRatio,
+            resolution: devicePixelRatio || 1,
         });
         document.body.appendChild(this.app.view);
 
