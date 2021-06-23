@@ -19,7 +19,12 @@ class App {
             resolution: devicePixelRatio || 1,
         });
         document.body.appendChild(this.app.view);
+        
 
+        let loaderOptions = {
+            loadType: PIXI.loaders.Resource.LOAD_TYPE.IMAGE,
+            xhrType: PIXI.loaders.Resource.XHR_RESPONSE_TYPE.BLOB
+        };
         this.cliclLock = false;
         this.loader = PIXI.Loader.shared;
         this.startButton = new Start(this.app);
@@ -40,7 +45,7 @@ class App {
             }
         }
         slots.forEach(element => {
-            this.loader.add("/docs/assets/symbols/" + element._name + ".png");
+            this.loader.add("/docs/assets/symbols/" + element._name + ".png", loaderOptions);
         });
         this.loader.load(this.setup.bind(this));
         this.app.stage.interactive = true;
