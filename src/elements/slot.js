@@ -5,7 +5,7 @@ export default class Slot {
 
     preSprite(loader) {
         return new PIXI.Sprite(
-            loader.resources["../src/assets/symbols/" + this._name + ".png"].texture
+            loader.resources["/src/assets/symbols/" + this._name + ".png"].texture
         );
     }
 
