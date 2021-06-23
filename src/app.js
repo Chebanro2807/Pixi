@@ -40,7 +40,7 @@ class App {
             }
         }
         slots.forEach(element => {
-            this.loader.add("../docs/assets/symbols/" + element._name + ".png");
+            this.loader.add("/docs/" + element._name + ".png");
         });
         this.loader.load(this.setup.bind(this));
         this.app.stage.interactive = true;
