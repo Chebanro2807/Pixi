@@ -41,7 +41,12 @@ class App {
             }
         }
         slots.forEach(element => {
-            this.loader.add("/Pixi/docs/assets/symbols/" + element._name + ".png");
+            console.log(window.location.hostnam);
+            if (window.location.hostname == "127.0.0.1" || window.location.hostname == "localhost") {
+                this.loader.add("/docs/assets/symbols/" + element._name + ".png");
+            } else {
+                this.loader.add("/Pixi/docs/assets/symbols/" + element._name + ".png");
+            }
         });
         this.loader.load(this.setup.bind(this));
         this.app.stage.interactive = true;
